@@ -41,6 +41,8 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'password'=> 'required'
+
         ]);
 
         User::create($request->all());
@@ -68,7 +70,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('user.edit',compact('user'));
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -83,6 +85,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'password'=> 'required'
         ]);
 
         $user->update($request->all());
