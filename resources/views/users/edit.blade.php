@@ -38,7 +38,9 @@
     <form action="{{ route('users.update',$user->id) }}" method="POST">
         @csrf
         @method('PUT')
-
+<div>
+    For user id {{ $user->user_id }}
+</div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
@@ -49,14 +51,15 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Email: {{ $user->email }}</strong>
-                    <input type="email" class="form-control" style="height:150px" name="email" placeholder="Email">
+                    <input type="email" class="form-control" style="height:150px" name="email" placeholder="{{ $user->email }}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>password:</strong>
-                    <input type="password" id="psw" name="password" class="form-control" placeholder="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-                </div>
+                    <strong>Contact Info: {{ $user->contact }}</strong>
+                    <textarea class="form-control" style="height:150px" name="contact" placeholder="{{ $user->contact }}">{{ $user->contact }}</textarea>                </div>
+            </div>
+
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                 <button type="submit" class="btn btn-primary">Submit</button>

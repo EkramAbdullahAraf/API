@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->integer('user_id')->unique();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('contact field');
+            $table->string('contact')->nullable();
             $table->timestamps();
         });
     }

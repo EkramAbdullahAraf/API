@@ -14,10 +14,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
-
-        return view('users.index',compact('users'))
+        $users = User::latest()->paginate(10);
+        return [
+            "status" => 1,
+            "data" => $users
+        ];
+        return view('users.index',compact('user'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
+
     }
 
     /**
@@ -39,14 +43,16 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id'=>'required',
             'name' => 'required',
             'email' => 'required',
-            'password'=> 'required'
-
         ]);
 
-        User::create($request->all());
-
+        $user = User::create($request->all());
+        return [
+            "status" => 1,
+            "data" => $user
+        ];
         return redirect()->route('users.index')
             ->with('success','User created successfully.');
     }
@@ -54,18 +60,23 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
     {
+        return [
+            "status" => 1,
+            "data" =>$user
+        ];
         return view('users.show',compact('user'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -77,7 +88,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -85,26 +96,33 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'password'=> 'required'
+            'contact'=>'required'
         ]);
 
         $user->update($request->all());
-
+        return [
+            "status" => 1,
+            "data" => $user,
+            "msg" => "User updated successfully"
+        ];
         return redirect()->route('users.index')
             ->with('success','User updated successfully');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
         $user->delete();
-
-        return redirect()->route('users.index')
-            ->with('success','User deleted successfully');
+        return [
+            "status" => 1,
+            "data" => $user,
+            "msg" => "User deleted successfully"
+        ];
     }
 }
